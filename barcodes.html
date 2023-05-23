@@ -1,0 +1,45 @@
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./EAN8.js"></script>
+<script src="./hub.js"></script>
+<script>
+function makeBarcodes() {
+        var libraryName = document.getElementById("libraryName").value;
+        var start = document.getElementById("start").value;
+        start = +start;
+        var count = document.getElementById("count").value;
+        count = +count;
+        var printdiv = document.getElementById("printish");
+        for (i=start; i<start+count; i++) {
+                var svgdiv = document.createElement("div");
+                printdiv.appendChild(svgdiv);
+                var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                svg.setAttribute("id", "svg"+i);
+                svgdiv.appendChild(svg);
+                hub(svg.id,i,libraryName);
+        }
+        var hideMe = document.getElementById("formish");
+        hideMe.style.display = "none";
+        var showMe = document.getElementById("printish");
+        showMe.style.display = "block";
+
+}
+</script>
+<body>
+
+<div id="printish">
+</div>
+
+<div id="formish">
+<h1>EAN8 circular barcode generator</h1>
+<form id="args" onsubmit="makeBarcodes(); return false;">
+Library Name: <input type="text" name="libraryName" id="libraryName">
+Start barcode: <input type="number" name="start" id="start" min="1000000" max="9999999">
+How many: <input type="number" name="count" id="count" min="1" max="123">
+<input type="submit" value="SUBMIT">
+</form>
+</div>
+
+</body>
+</html>
